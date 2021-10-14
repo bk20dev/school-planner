@@ -1,7 +1,8 @@
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { RouteIcon } from '../components/RouteIcon';
+import Placeholder from "./Placeholder";
 
 const Tab = createBottomTabNavigator();
 
@@ -19,10 +20,10 @@ export const MainScreen = () => {
         tabBarActiveTintColor: 'rgba(0,0,0,1)',
         tabBarInactiveTintColor: 'rgba(0,0,0,.4)',
       })}>
-      <Tab.Screen name={'Dashboard'} component={() => <Text>Dashboard</Text>} />
-      <Tab.Screen name={'Homework'} component={() => <Text>Homework</Text>} />
-      <Tab.Screen name={'Exams'} component={() => <Text>Exams</Text>} />
-      <Tab.Screen name={'Schedule'} component={() => <Text>Schedule</Text>} />
+      <Tab.Screen name={'Dashboard'} component={Placeholder} />
+      <Tab.Screen name={'Homework'} component={Placeholder} />
+      <Tab.Screen name={'Exams'} component={Placeholder} />
+      <Tab.Screen name={'Schedule'} component={Placeholder} />
     </Tab.Navigator>
   );
 };
