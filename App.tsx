@@ -4,11 +4,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { MainScreen } from './screens/MainScreen';
 
-export type RootStackParamList = {
-  Main: undefined;
-  Settings: undefined;
-};
-
 const Stack = createNativeStackNavigator();
 
 export default function App() {
