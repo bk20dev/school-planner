@@ -1,14 +1,26 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
+import {
+  DefaultTheme,
+  NavigationContainer,
+  Theme,
+} from '@react-navigation/native';
 import { MainScreen } from './screens/MainScreen';
 import Placeholder from './screens/Placeholder';
 
 const Stack = createNativeStackNavigator();
 
+const AppTheme: Theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: '#fff',
+  },
+};
+
 export default function App() {
   return (
-    <NavigationContainer theme={DefaultTheme}>
+    <NavigationContainer theme={AppTheme}>
       <Stack.Navigator
         initialRouteName="Main"
         screenOptions={{ headerShown: false }}>
