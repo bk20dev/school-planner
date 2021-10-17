@@ -7,6 +7,8 @@ import {
 } from '@react-navigation/native';
 import { MainScreen } from './screens/MainScreen';
 import Placeholder from './screens/Placeholder';
+import { Provider } from 'react-redux';
+import { store } from './store';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,13 +22,15 @@ const AppTheme: Theme = {
 
 export default function App() {
   return (
-    <NavigationContainer theme={AppTheme}>
-      <Stack.Navigator
-        initialRouteName="Main"
-        screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Main" component={MainScreen} />
-        <Stack.Screen name="Settings" component={Placeholder} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer theme={AppTheme}>
+        <Stack.Navigator
+          initialRouteName="Main"
+          screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Main" component={MainScreen} />
+          <Stack.Screen name="Settings" component={Placeholder} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
