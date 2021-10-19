@@ -7,6 +7,8 @@ import {
 } from '@react-navigation/native';
 import { MainScreen } from './screens/MainScreen';
 import Placeholder from './screens/Placeholder';
+import DatabaseContextWrapper from './storage/DatabaseContext';
+import DatabaseConfig from './storage/DatabaseConfig';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,13 +22,17 @@ const AppTheme: Theme = {
 
 export default function App() {
   return (
-    <NavigationContainer theme={AppTheme}>
-      <Stack.Navigator
-        initialRouteName="Main"
-        screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Main" component={MainScreen} />
-        <Stack.Screen name="Settings" component={Placeholder} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <DatabaseContextWrapper>
+      <DatabaseConfig>
+        <NavigationContainer theme={AppTheme}>
+          <Stack.Navigator
+            initialRouteName="Main"
+            screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Main" component={MainScreen} />
+            <Stack.Screen name="Settings" component={Placeholder} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </DatabaseConfig>
+    </DatabaseContextWrapper>
   );
 }

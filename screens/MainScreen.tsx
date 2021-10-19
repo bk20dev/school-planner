@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
@@ -8,6 +8,7 @@ import { RouteIcon } from '../components/RouteIcon';
 import Placeholder from './Placeholder';
 import { Appbar } from 'react-native-paper';
 import { Route } from '@react-navigation/native';
+import TimeTable from './TimeTable';
 
 const Tab = createBottomTabNavigator();
 
@@ -25,7 +26,7 @@ const options: BottomTabNavigationOptions = {
     paddingTop: 16,
     paddingBottom: 16,
     elevation: 0,
-    borderTopWidth: 0
+    borderTopWidth: 0,
   },
   tabBarIconStyle: {
     margin: 8,
@@ -51,7 +52,7 @@ export const MainScreen = () => {
       <Tab.Screen name={'Dashboard'} component={Placeholder} />
       <Tab.Screen name={'Homework'} component={Placeholder} />
       <Tab.Screen name={'Exams'} component={Placeholder} />
-      <Tab.Screen name={'Schedule'} component={Placeholder} />
+      <Tab.Screen name={'Schedule'} component={TimeTable} />
     </Tab.Navigator>
   );
 };

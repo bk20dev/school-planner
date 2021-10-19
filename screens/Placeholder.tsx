@@ -1,8 +1,8 @@
-import {Text} from "react-native";
-import React from "react";
+import { Text } from 'react-native';
+import React from 'react';
 
 interface Route {
-  name: string
+  name: string;
 }
 
 export default function Placeholder({ route }: { route: Route }) {
