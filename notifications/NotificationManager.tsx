@@ -13,7 +13,7 @@ Notifications.setNotificationHandler({
 
 const NotificationManager = () => {
     const [setExpoPushToken] = useState('');
-    const [setNotification] = useState(false);
+    const [notification,setNotification] = useState(false);
     const notificationListener = useRef();
     const responseListener = useRef();
     useEffect(() => {
