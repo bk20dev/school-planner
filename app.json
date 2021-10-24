@@ -27,6 +27,14 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      ["expo-notifications",{
+        "icon":"rlocal/assets/icons/history_edu_black_25dp.svg",
+        "color": "#2222DD",
+        "sounds": ["local/assets/sounds/sound.wav"],
+        "mode": "production"
+      }]
+    ]
   }
 }

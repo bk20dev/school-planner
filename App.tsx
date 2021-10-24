@@ -9,6 +9,7 @@ import { MainScreen } from './screens/MainScreen';
 import Placeholder from './screens/Placeholder';
 import DatabaseContextWrapper from './storage/DatabaseContext';
 import DatabaseConfig from './storage/DatabaseConfig';
+import NotificationManager from "./notifications/NotificationManager";
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +22,7 @@ const AppTheme: Theme = {
 };
 
 export default function App() {
+  NotificationManager();
   return (
     <DatabaseContextWrapper>
       <DatabaseConfig>

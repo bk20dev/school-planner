@@ -10,7 +10,9 @@ const TimeTable = () => {
       <TextInput value={lesson} onChangeText={value => setLesson(value)} />
       <Button
         title="Add lesson"
-        onPress={() => console.log(`adding ${lesson} to the lessons list`)}
+        onPress={() => {
+            console.log(`adding ${lesson} to the lessons list`);
+        }}
       />
     </View>
   );
