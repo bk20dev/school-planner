@@ -9,7 +9,7 @@ import Placeholder from './Placeholder';
 import { Appbar } from 'react-native-paper';
 import { Route } from '@react-navigation/native';
 import { DashboardScreen } from './DashboardScreen';
-import EventForm from '../components/EventForm';
+import { Routes } from '../constants/Routes';
 
 const Tab = createBottomTabNavigator();
 
@@ -50,10 +50,10 @@ export const MainScreen = () => {
         tabBarIcon: ({ focused }) => getIcon(route, focused),
         ...options,
       })}>
-      <Tab.Screen name={'Dashboard'} component={DashboardScreen} />
-      <Tab.Screen name={'Homework'} component={Placeholder} />
-      <Tab.Screen name={'Exams'} component={Placeholder} />
-      <Tab.Screen name={'Schedule'} component={EventForm} />
+      <Tab.Screen name={Routes.Dashboard} component={DashboardScreen} />
+      <Tab.Screen name={Routes.Homework} component={Placeholder} />
+      <Tab.Screen name={Routes.Exams} component={Placeholder} />
+      <Tab.Screen name={Routes.Schedule} component={Placeholder} />
     </Tab.Navigator>
   );
 };

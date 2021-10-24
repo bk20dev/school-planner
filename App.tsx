@@ -1,26 +1,16 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import {
-  DefaultTheme,
-  NavigationContainer,
-  Theme,
-} from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { MainScreen } from './screens/MainScreen';
-import Placeholder from './screens/Placeholder';
 import { Provider as ReduxProvider } from 'react-redux';
 import { store } from './store';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { DatabaseLoader } from './storage/DatabaseContext';
+import AppTheme from './constants/AppTheme';
+import { AddEventScreen } from './screens/AddEventScreen';
+import { Routes } from './constants/Routes';
 
 const Stack = createNativeStackNavigator();
-
-const AppTheme: Theme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    background: '#fff',
-  },
-};
 
 export default function App() {
   return (
@@ -29,10 +19,10 @@ export default function App() {
         <PaperProvider>
           <NavigationContainer theme={AppTheme}>
             <Stack.Navigator
-              initialRouteName="Main"
+              initialRouteName={Routes.Main}
               screenOptions={{ headerShown: false }}>
-              <Stack.Screen name="Main" component={MainScreen} />
-              <Stack.Screen name="Settings" component={Placeholder} />
+              <Stack.Screen name={Routes.Main} component={MainScreen} />
+              <Stack.Screen name={Routes.AddEvent} component={AddEventScreen} />
             </Stack.Navigator>
           </NavigationContainer>
         </PaperProvider>
@@ -40,3 +30,4 @@ export default function App() {
     </ReduxProvider>
   );
 }
+
