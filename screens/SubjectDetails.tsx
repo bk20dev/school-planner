@@ -1,20 +1,25 @@
-import React, { FC } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import React, { FC, useContext } from 'react';
+import { StyleSheet, View, ScrollView, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useEffect } from 'hoist-non-react-statics/node_modules/@types/react';
 import { ScreenRouteProp } from '../App';
 import { Routes } from '../constants/Routes';
+import { DatabaseContext } from '../storage/DatabaseContext';
+import { useDispatch } from 'react-redux';
+import { remove } from '../store/eventsSlice';
+import { Button } from 'react-native-paper';
+import AppTheme from '../constants/AppTheme';
+import { TSpan } from 'react-native-svg';
 
-interface Props {
+interface SubjectDetailsProps {
   route: ScreenRouteProp<Routes.SubjectDetails>;
 }
 
-export const AddSubjectScreen: FC<Props> = ({ route }) => {
+export const SubjectDetails: FC<SubjectDetailsProps> = ({ route }) => {
   const navigation = useNavigation();
+  const database = useContext(DatabaseContext);
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log(route);
-  }, []);
+  const { event } = route.params;
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -23,22 +28,65 @@ export const AddSubjectScreen: FC<Props> = ({ route }) => {
     });
   });
 
+  const handleDelete = () => {
+    database.instance.transaction(tx => {
+      tx.executeSql('DELETE FROM events WHERE id = ?', [event.id]);
+    });
+
+    dispatch(remove(event.id));
+
+    // @ts-ignore
+    navigation.navigate(Routes.Dashboard);
+  };
+
   return (
-    <View style={styles.container}>
-      <Text>dupa</Text>
-    </View>
+    <ScrollView style={styles.container}>
+      <View style={styles.row}>
+        <Text style={styles.title}>Przedmiot: </Text>
+        <Text style={styles.description}>{event.subject}</Text>
+      </View>
+      <View style={styles.spacer} />
+      <View style={styles.row}>
+        <Text style={styles.title}>Opis: </Text>
+        <Text style={styles.description}>{event.title}</Text>
+      </View>
+      <View style={styles.spacer} />
+      <View style={styles.row}>
+        <Text style={styles.title}>Typ: </Text>
+        <Text style={styles.description}>{event.type}</Text>
+      </View>
+      <View style={styles.spacer} />
+      <View style={styles.spacer} />
+      <View style={styles.spacer} />
+      <Button style={styles.button} theme={AppTheme} onPress={handleDelete}>
+        Usuń
+      </Button>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  row: {
+    flex: 1,
+  },
   container: {
     padding: 24,
-  },
-  wrapper: {
-    marginBottom: 16,
   },
   button: {
     backgroundColor: 'rgba(253, 152, 0, .16)',
     borderRadius: 32,
+  },
+  spacer: {
+    flexDirection: 'row',
+    paddingHorizontal: 12,
+    flexGrow: 1,
+    height: 15,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  description: {
+    fontSize: 18,
   },
 });

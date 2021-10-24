@@ -1,8 +1,9 @@
-import { EventItem, EventItemProps } from './EventItem';
-import React, { Fragment } from 'react';
+import { EventItem } from './EventItem';
+import React, { FC, Fragment } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 import { Routes } from '../constants/Routes';
+import { Event } from '../types/Event';
 
 const styles = StyleSheet.create({
   container: {
@@ -16,12 +17,16 @@ const styles = StyleSheet.create({
   },
 });
 
-export const EventList = ({ events }: { events: EventItemProps[] }) => {
+interface EventListProps {
+  events: Event[];
+}
+
+export const EventList: FC<EventListProps> = ({ events }) => {
   return (
     <View style={styles.container}>
-      {events.map(({ title, description, tags }, i) => (
+      {events.map((event, i) => (
         <Fragment key={i}>
-          <EventItem title={title} description={description} tags={tags} />
+          <EventItem event={event} />
           {i !== events.length - 1 && <View style={styles.spacer} />}
         </Fragment>
       ))}

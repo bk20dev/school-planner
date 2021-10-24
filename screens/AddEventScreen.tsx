@@ -51,14 +51,13 @@ export const AddEventScreen = () => {
     database.instance.transaction(tx => {
       tx.executeSql(
         'INSERT INTO events (date, type, title, subjectId) VALUES (?, ?, ?, ?)',
-        [getBaseDate(date).toISOString(), type, description, 1],
+        [getBaseDate(date).toISOString(), type, description, subject],
       );
 
       tx.executeSql(
         'SELECT events.id, events.date, events.title, events.type, subjects.name as subject FROM events INNER JOIN subjects ON subjects.id = events.subjectId ORDER BY events.id DESC LIMIT 1',
         [],
         (_, result) => {
-          console.log(result.rows.item(0));
           dispatch(add(result.rows.item(0)));
         },
       );

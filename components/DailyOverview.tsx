@@ -1,8 +1,8 @@
 import { StyleSheet, Text } from 'react-native';
 import { EventList } from './EventList';
-import React from 'react';
+import React, { FC } from 'react';
 import { months, weekdays } from '../constants/calendar';
-import { EventItemProps } from './EventItem';
+import { Event } from '../types/Event';
 
 const styles = StyleSheet.create({
   date: {
@@ -21,13 +21,12 @@ const formatDate = (date: Date) => {
   return `${weekday}, ${day} ${month}`;
 };
 
-export const DailyOverview = ({
-  date,
-  events,
-}: {
+interface DailyOverviewProps {
   date: Date;
-  events: EventItemProps[];
-}) => (
+  events: Event[];
+}
+
+export const DailyOverview: FC<DailyOverviewProps> = ({ date, events }) => (
   <>
     <Text style={styles.date}>{formatDate(date)}</Text>
     <EventList events={events} />

@@ -1,6 +1,8 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Indicator } from './Indicator';
+import { useNavigation } from '@react-navigation/core';
+import React, { FC } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Routes } from '../constants/Routes';
+import { Event } from '../types/Event';
 
 const styles = StyleSheet.create({
   container: {
@@ -11,7 +13,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
   },
-  indicators: {
+  spacer: {
     flexDirection: 'row',
     paddingHorizontal: 12,
     flexGrow: 1,
@@ -22,22 +24,27 @@ const styles = StyleSheet.create({
   },
 });
 
-export interface EventItemProps {
-  title: string;
-  description: string;
-  tags: string[];
+interface EventItemProps {
+  event: Event;
 }
 
-export const EventItem = ({ title, description, tags }: EventItemProps) => {
+export const EventItem: FC<EventItemProps> = ({ event }) => {
+  const navigation = useNavigation();
+
+  const openDetails = () => {
+    // @ts-ignore
+    navigation.navigate(Routes.SubjectDetails, {
+      event,
+    });
+  };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
-      <View style={styles.indicators}>
-        {tags.map((color, i) => (
-          <Indicator key={i} color={color} />
-        ))}
+    <TouchableOpacity onPress={openDetails}>
+      <View style={styles.container}>
+        <Text style={styles.title}>{event.subject}</Text>
+        <View style={styles.spacer} />
+        <Text style={styles.description}>{event.type}</Text>
       </View>
-      <Text style={styles.description}>{description}</Text>
-    </View>
+    </TouchableOpacity>
   );
 };

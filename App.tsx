@@ -13,6 +13,7 @@ import { MainScreen } from './screens/MainScreen';
 import { DatabaseLoader } from './storage/DatabaseContext';
 import { store } from './store';
 import { Event } from './types/Event';
+import { SubjectDetails } from './screens/SubjectDetails';
 
 export type RootStackParamList = {
   SubjectDetails: {
@@ -42,6 +43,10 @@ const App: FC = () => {
                 headerShown: false,
                 headerShadowVisible: false,
               }}>
+              <Stack.Screen
+                name={Routes.SubjectDetails}
+                component={SubjectDetails}
+              />
               <Stack.Screen name={Routes.Main} component={MainScreen} />
               <Stack.Screen
                 name={Routes.AddSubject}

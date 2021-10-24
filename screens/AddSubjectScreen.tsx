@@ -34,7 +34,6 @@ export const AddSubjectScreen = () => {
         'SELECT id, name FROM subjects ORDER BY id DESC LIMIT 1',
         [],
         (_, result) => {
-          console.log(result.rows.item(0));
           dispatch(add(result.rows.item(0)));
         },
       );

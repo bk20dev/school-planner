@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { useEffect } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
@@ -10,6 +10,7 @@ import { ImagePlaceholder } from '../components/ImagePlaceholder';
 
 export const DashboardScreen = () => {
   const events = useSelector((state: RootState) => state.eventsSlice);
+
   const overview = _.chain(events)
     .groupBy('date')
     .toPairs()
@@ -21,13 +22,7 @@ export const DashboardScreen = () => {
 
   const renderList = () => {
     return overview.map(([date, events]) => {
-      const items = events.map(({ subject, type }) => ({
-        title: subject,
-        description: type,
-        tags: [],
-      }));
-
-      return <DailyOverview key={date} date={new Date(date)} events={items} />;
+      return <DailyOverview key={date} date={new Date(date)} events={events} />;
     });
   };
 

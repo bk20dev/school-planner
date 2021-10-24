@@ -19,7 +19,6 @@ export const DatabaseLoader: FC = ({ children }) => {
       tx.executeSql('SELECT * FROM subjects', [], (_, result) => {
         const subjects = (result.rows as unknown as { _array: Subject[] })
           ._array;
-        console.log(subjects);
         dispatch(setSubjects(subjects));
       });
 
@@ -28,7 +27,6 @@ export const DatabaseLoader: FC = ({ children }) => {
         [],
         (_, result) => {
           const events = (result.rows as unknown as { _array: Event[] })._array;
-          console.log(events);
           dispatch(setEvents(events));
         },
       );
