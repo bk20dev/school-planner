@@ -10,7 +10,7 @@ export const StyledDatePicker: FC<{
 }> = props => {
   const formatDate = (date: Date) => {
     const day = date.getDate();
-    const month = date.getDate();
+    const month = date.getMonth();
     const year = date.getFullYear();
 
     return `${day}/${month + 1}/${year}`;
@@ -37,6 +37,7 @@ export const StyledDatePicker: FC<{
           mode="date"
           is24Hour={true}
           display="default"
+          // @ts-ignore
           onChange={(_, date) => {
             setVisible(false);
             props.setDate(date || props.value);

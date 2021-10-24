@@ -16,6 +16,12 @@ const types: { label: string; value: EventType }[] = [
   { label: 'Exam', value: EventType.Exam },
 ];
 
+const getBaseDate = (date: Date) => {
+  const day = 86400000;
+  const base = Math.floor(date.getTime() / day) * day;
+  return new Date(base);
+};
+
 export const AddEventScreen = () => {
   const dispatch = useDispatch();
   const database = useContext(DatabaseContext);
@@ -28,7 +34,6 @@ export const AddEventScreen = () => {
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: true,
-      headerShadowVisible: false,
       headerRight: () => (
         <Button onPress={handleSubmit} theme={AppTheme} style={styles.button}>
           Add
@@ -44,11 +49,9 @@ export const AddEventScreen = () => {
 
   const handleSubmit = () => {
     database.instance.transaction(tx => {
-      const date = new Date().toISOString();
-
       tx.executeSql(
         'INSERT INTO events (date, type, title, subjectId) VALUES (?, ?, ?, ?)',
-        [date, type, description, subject],
+        [getBaseDate(date).toISOString(), type, description, 1],
       );
 
       tx.executeSql(
