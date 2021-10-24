@@ -6,4 +6,5 @@ export enum Routes {
   AddEvent = 'AddEvent',
   AddSubject = 'AddSubject',
   SubjectDetails = 'SubjectDetails',
+  RemoveSubject = 'RemoveSubject',
 }

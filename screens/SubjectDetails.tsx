@@ -8,7 +8,6 @@ import { useDispatch } from 'react-redux';
 import { remove } from '../store/eventsSlice';
 import { Button } from 'react-native-paper';
 import AppTheme from '../constants/AppTheme';
-import { TSpan } from 'react-native-svg';
 
 interface SubjectDetailsProps {
   route: ScreenRouteProp<Routes.SubjectDetails>;
@@ -42,17 +41,17 @@ export const SubjectDetails: FC<SubjectDetailsProps> = ({ route }) => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.row}>
-        <Text style={styles.title}>Przedmiot: </Text>
+        <Text style={styles.title}>Subject: </Text>
         <Text style={styles.description}>{event.subject}</Text>
       </View>
       <View style={styles.spacer} />
       <View style={styles.row}>
-        <Text style={styles.title}>Opis: </Text>
+        <Text style={styles.title}>Description: </Text>
         <Text style={styles.description}>{event.title}</Text>
       </View>
       <View style={styles.spacer} />
       <View style={styles.row}>
-        <Text style={styles.title}>Typ: </Text>
+        <Text style={styles.title}>Type: </Text>
         <Text style={styles.description}>{event.type}</Text>
       </View>
       <View style={styles.spacer} />

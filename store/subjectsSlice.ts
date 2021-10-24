@@ -14,7 +14,8 @@ const subjectsSlice = createSlice({
       state.push(action.payload);
     },
     remove(state, action: PayloadAction<number>) {
-      state = state.filter(subject => subject.id !== action.payload);
+      const id = state.findIndex(subject => subject.id == action.payload);
+      state.splice(id, 1);
     },
   },
 });

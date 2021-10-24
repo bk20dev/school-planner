@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import React, { useContext, useState } from 'react';
 import { DatabaseContext } from '../storage/DatabaseContext';
 import { EventType } from '../types/Event';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View, Text } from 'react-native';
 import { StyledDropDown } from '../components/StyledDropDown';
 import { Button, TextInput } from 'react-native-paper';
 import AppTheme from '../constants/AppTheme';
@@ -26,9 +26,9 @@ export const AddEventScreen = () => {
   const dispatch = useDispatch();
   const database = useContext(DatabaseContext);
 
-  const subjects: { value: number; label: string }[] = useSelector(
+  const subjects: { value: string; label: string }[] = useSelector(
     (state: RootState) => state.subjectsSlice,
-  ).map(subject => ({ value: subject.id, label: subject.name }));
+  ).map(subject => ({ value: subject.name, label: subject.name }));
 
   const navigation = useNavigation();
   React.useLayoutEffect(() => {
@@ -42,33 +42,41 @@ export const AddEventScreen = () => {
     });
   });
 
-  const [subject, setSubject] = useState(subjects[0].value);
+  const [subject, setSubject] = useState<number | string>(subjects[0]?.value);
   const [type, setType] = useState<EventType>(EventType.Exam);
   const [date, setDate] = useState(new Date());
   const [description, setDescription] = useState('');
+  const [error, setError] = useState('');
 
   const handleSubmit = () => {
-    database.instance.transaction(tx => {
-      tx.executeSql(
-        'INSERT INTO events (date, type, title, subjectId) VALUES (?, ?, ?, ?)',
-        [getBaseDate(date).toISOString(), type, description, subject],
-      );
+    if (subject && description) {
+      database.instance.transaction(tx => {
+        tx.executeSql(
+          'INSERT INTO events (date, type, title, subject) VALUES (?, ?, ?, ?)',
+          [getBaseDate(date).toISOString(), type, description, subject],
+        );
 
-      tx.executeSql(
-        'SELECT events.id, events.date, events.title, events.type, subjects.name as subject FROM events INNER JOIN subjects ON subjects.id = events.subjectId ORDER BY events.id DESC LIMIT 1',
-        [],
-        (_, result) => {
-          dispatch(add(result.rows.item(0)));
-        },
-      );
+        tx.executeSql(
+          'SELECT * FROM events ORDER BY id DESC LIMIT 1',
+          [],
+          (_, result) => {
+            dispatch(add(result.rows.item(0)));
+          },
+        );
 
-      // @ts-ignore
-      navigation.navigate('Dashboard');
-    });
+        // @ts-ignore
+        navigation.navigate('Dashboard');
+      });
+    } else {
+      setError(
+        'You need to fill in all fields! You can add a new subject in 3 dot menu :)',
+      );
+    }
   };
 
   return (
     <ScrollView style={styles.container}>
+      <Text style={{ color: '#FD9800', fontSize: 12 }}>{error}</Text>
       <View style={styles.wrapper}>
         <StyledDropDown
           label="Subject"

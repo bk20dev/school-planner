@@ -28,6 +28,14 @@ export const Settings: FC = () => {
         }}
         title="Add subject"
       />
+      <Menu.Item
+        onPress={() => {
+          // @ts-ignore
+          navigation.navigate(Routes.RemoveSubject);
+          setVisible(false);
+        }}
+        title="Remove subject"
+      />
     </Menu>
   );
 };

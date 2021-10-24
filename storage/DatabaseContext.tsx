@@ -22,14 +22,10 @@ export const DatabaseLoader: FC = ({ children }) => {
         dispatch(setSubjects(subjects));
       });
 
-      tx.executeSql(
-        'SELECT events.id, events.date, events.title, events.type, subjects.name FROM events INNER JOIN subjects ON subjects.id = events.subjectId',
-        [],
-        (_, result) => {
-          const events = (result.rows as unknown as { _array: Event[] })._array;
-          dispatch(setEvents(events));
-        },
-      );
+      tx.executeSql('SELECT * FROM events', [], (_, result) => {
+        const events = (result.rows as unknown as { _array: Event[] })._array;
+        dispatch(setEvents(events));
+      });
     });
   });
 

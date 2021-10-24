@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
-import React, { useContext, useState, Fragment } from 'react';
+import React, { useContext, useState } from 'react';
 import { DatabaseContext } from '../storage/DatabaseContext';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 import AppTheme from '../constants/AppTheme';
 import { useNavigation } from '@react-navigation/native';
@@ -25,26 +25,34 @@ export const AddSubjectScreen = () => {
   });
 
   const [subject, setSubject] = useState('');
+  const [error, setError] = useState('');
 
   const handleSubmit = () => {
-    database.instance.transaction(tx => {
-      tx.executeSql('INSERT INTO subjects (name) VALUES (?)', [subject]);
+    if (subject.length > 0 && subject.length <= 18) {
+      database.instance.transaction(tx => {
+        tx.executeSql('INSERT INTO subjects (name) VALUES (?)', [subject]);
 
-      tx.executeSql(
-        'SELECT id, name FROM subjects ORDER BY id DESC LIMIT 1',
-        [],
-        (_, result) => {
-          dispatch(add(result.rows.item(0)));
-        },
-      );
+        tx.executeSql(
+          'SELECT id, name FROM subjects ORDER BY id DESC LIMIT 1',
+          [],
+          (_, result) => {
+            dispatch(add(result.rows.item(0)));
+          },
+        );
 
-      // @ts-ignore
-      navigation.navigate('Dashboard');
-    });
+        // @ts-ignore
+        navigation.navigate('Dashboard');
+      });
+    } else if (!subject) {
+      setError('You need to enter the name!');
+    } else {
+      setError('The name is too long!');
+    }
   };
 
   return (
     <View style={styles.container}>
+      <Text style={{ color: '#FD9800', fontSize: 12 }}>{error}</Text>
       <View style={styles.wrapper}>
         <TextInput
           label="Name"

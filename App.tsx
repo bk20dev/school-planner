@@ -14,6 +14,7 @@ import { DatabaseLoader } from './storage/DatabaseContext';
 import { store } from './store';
 import { Event } from './types/Event';
 import { SubjectDetails } from './screens/SubjectDetails';
+import { RemoveSubjectScreen } from './screens/RemoveSubjectScreen';
 
 export type RootStackParamList = {
   SubjectDetails: {
@@ -46,11 +47,26 @@ const App: FC = () => {
               <Stack.Screen
                 name={Routes.SubjectDetails}
                 component={SubjectDetails}
+                options={{
+                  title: 'Event details',
+                  headerShown: true,
+                  headerShadowVisible: false,
+                }}
               />
               <Stack.Screen name={Routes.Main} component={MainScreen} />
               <Stack.Screen
                 name={Routes.AddSubject}
                 component={AddSubjectScreen}
+                options={{ title: 'Add subject' }}
+              />
+              <Stack.Screen
+                name={Routes.RemoveSubject}
+                component={RemoveSubjectScreen}
+                options={{
+                  title: 'Remove subject',
+                  headerShown: true,
+                  headerShadowVisible: false,
+                }}
               />
               <Stack.Screen
                 name={Routes.AddEvent}
