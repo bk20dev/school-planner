@@ -10,7 +10,7 @@ export const StyledDatePicker: FC<{
 }> = props => {
   const formatDate = (date: Date) => {
     const day = date.getDate();
-    const month = date.getDate();
+    const month = date.getMonth();
     const year = date.getFullYear();
 
     return `${day}/${month + 1}/${year}`;

@@ -15,14 +15,19 @@ const styles = StyleSheet.create({
 
 export const DashboardScreen = () => {
   const events = useSelector((state: RootState) => state.eventsSlice);
-  const grouped = _.groupBy(events, 'date');
+  const groups = _.chain(events)
+    .groupBy('date')
+    .toPairs()
+    .sortBy(0)
+    .value()
+    .reverse();
 
   const navigation = useNavigation();
 
   return (
     <>
       <ScrollView style={styles.container}>
-        {Object.entries(grouped).map(([date, events]) => {
+        {groups.map(([date, events]) => {
           const items = events.map(({ subject, type }) => ({
             title: subject,
             description: type,

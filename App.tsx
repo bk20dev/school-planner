@@ -20,9 +20,9 @@ export default function App() {
           <NavigationContainer theme={AppTheme}>
             <Stack.Navigator
               initialRouteName={Routes.Main}
-              screenOptions={{ headerShown: false }}>
+              screenOptions={{ headerShown: false, headerShadowVisible: false }}>
               <Stack.Screen name={Routes.Main} component={MainScreen} />
-              <Stack.Screen name={Routes.AddEvent} component={AddEventScreen} />
+              <Stack.Screen name={Routes.AddEvent} options={{title: "Add new event"}} component={AddEventScreen} />
             </Stack.Navigator>
           </NavigationContainer>
         </PaperProvider>
