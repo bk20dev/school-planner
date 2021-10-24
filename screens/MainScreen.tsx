@@ -10,6 +10,8 @@ import { Route } from '@react-navigation/native';
 import { DashboardScreen } from './DashboardScreen';
 import { Routes } from '../constants/Routes';
 import { Settings } from '../components/Settings';
+import { HomeworkScreen } from './HomeworkScreen';
+import { ExamScreen } from './ExamScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -49,8 +51,8 @@ export const MainScreen = () => {
         ...options,
       })}>
       <Tab.Screen name={Routes.Dashboard} component={DashboardScreen} />
-      <Tab.Screen name={Routes.Homework} component={Placeholder} />
-      <Tab.Screen name={Routes.Exams} component={Placeholder} />
+      <Tab.Screen name={Routes.Homework} component={HomeworkScreen} />
+      <Tab.Screen name={Routes.Exams} component={ExamScreen} />
     </Tab.Navigator>
   );
 };
