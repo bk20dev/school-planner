@@ -6,15 +6,11 @@ import _ from 'lodash';
 import { DailyOverview } from '../components/DailyOverview';
 import { Fab } from '../components/Fab';
 import { useNavigation } from '@react-navigation/native';
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 24,
-  },
-});
+import { ImagePlaceholder } from '../components/ImagePlaceholder';
 
 export const DashboardScreen = () => {
   const events = useSelector((state: RootState) => state.eventsSlice);
-  const groups = _.chain(events)
+  const overview = _.chain(events)
     .groupBy('date')
     .toPairs()
     .sortBy(0)
@@ -23,24 +19,35 @@ export const DashboardScreen = () => {
 
   const navigation = useNavigation();
 
+  const renderList = () => {
+    return overview.map(([date, events]) => {
+      const items = events.map(({ subject, type }) => ({
+        title: subject,
+        description: type,
+        tags: [],
+      }));
+
+      return <DailyOverview key={date} date={new Date(date)} events={items} />;
+    });
+  };
+
+  const renderOverview = () => {
+    if (overview.length)
+      return <ScrollView style={styles.container}>{renderList()}</ScrollView>;
+    return <ImagePlaceholder />;
+  };
+
   return (
     <>
-      <ScrollView style={styles.container}>
-        {groups.map(([date, events]) => {
-          const items = events.map(({ subject, type }) => ({
-            title: subject,
-            description: type,
-            tags: [],
-          }));
-
-          return (
-            <DailyOverview key={date} date={new Date(date)} events={items} />
-          );
-        })}
-      </ScrollView>
-
+      {renderOverview()}
       {/* @ts-ignore */}
       <Fab onPress={() => navigation.navigate('AddEvent')} />
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 24,
+  },
+});
