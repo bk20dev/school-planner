@@ -4,9 +4,9 @@ export enum EventType {
 }
 
 export interface Event {
-  date: Date,
+  id: number;
+  date: string;
   type: EventType;
   subject: string;
-  title?: string;
-  details?: string;
+  title: string;
 }

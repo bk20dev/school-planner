@@ -9,6 +9,7 @@ import Placeholder from './Placeholder';
 import { Appbar } from 'react-native-paper';
 import { Route } from '@react-navigation/native';
 import { DashboardScreen } from './DashboardScreen';
+import EventForm from '../components/EventForm';
 
 const Tab = createBottomTabNavigator();
 
@@ -52,7 +53,7 @@ export const MainScreen = () => {
       <Tab.Screen name={'Dashboard'} component={DashboardScreen} />
       <Tab.Screen name={'Homework'} component={Placeholder} />
       <Tab.Screen name={'Exams'} component={Placeholder} />
-      <Tab.Screen name={'Schedule'} component={Placeholder} />
+      <Tab.Screen name={'Schedule'} component={EventForm} />
     </Tab.Navigator>
   );
 };

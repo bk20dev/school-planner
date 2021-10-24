@@ -7,8 +7,10 @@ import {
 } from '@react-navigation/native';
 import { MainScreen } from './screens/MainScreen';
 import Placeholder from './screens/Placeholder';
-import { Provider } from 'react-redux';
+import { Provider as ReduxProvider } from 'react-redux';
 import { store } from './store';
+import { Provider as PaperProvider } from 'react-native-paper';
+import { DatabaseLoader } from './storage/DatabaseContext';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,15 +24,19 @@ const AppTheme: Theme = {
 
 export default function App() {
   return (
-    <Provider store={store}>
-      <NavigationContainer theme={AppTheme}>
-        <Stack.Navigator
-          initialRouteName="Main"
-          screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Main" component={MainScreen} />
-          <Stack.Screen name="Settings" component={Placeholder} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </Provider>
+    <ReduxProvider store={store}>
+      <DatabaseLoader>
+        <PaperProvider>
+          <NavigationContainer theme={AppTheme}>
+            <Stack.Navigator
+              initialRouteName="Main"
+              screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="Main" component={MainScreen} />
+              <Stack.Screen name="Settings" component={Placeholder} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </PaperProvider>
+      </DatabaseLoader>
+    </ReduxProvider>
   );
 }
