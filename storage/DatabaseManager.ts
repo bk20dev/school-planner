@@ -10,8 +10,7 @@ export class DatabaseManager {
 
   private initialize() {
     const queries = [
-      'CREATE TABLE IF NOT EXISTS subjects (id INTEGER PRIMARY KEY AUTOINCREMENT, subject TEXT NOT NULL)',
-      "INSERT INTO subjects (subject) VALUES ('matematyka')",
+      'CREATE TABLE IF NOT EXISTS subjects (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL)',
       'CREATE TABLE IF NOT EXISTS events (id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT NOT NULL, type TEXT NOT NULL,  title TEXT NOT NULL, subjectId INTEGER NOT NULL, FOREIGN KEY (subjectId) REFERENCES subjects(id))',
     ];
 

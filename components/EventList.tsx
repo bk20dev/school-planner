@@ -1,6 +1,8 @@
 import { EventItem, EventItemProps } from './EventItem';
 import React, { Fragment } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { useNavigation } from '@react-navigation/core';
+import { Routes } from '../constants/Routes';
 
 const styles = StyleSheet.create({
   container: {

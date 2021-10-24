@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import React, { useContext, useState } from 'react';
 import { DatabaseContext } from '../storage/DatabaseContext';
 import { EventType } from '../types/Event';
@@ -9,14 +9,7 @@ import AppTheme from '../constants/AppTheme';
 import { StyledDatePicker } from '../components/StyledDatePicker';
 import { useNavigation } from '@react-navigation/native';
 import { add } from '../store/eventsSlice';
-
-const subjects: { label: string; value: string }[] = [
-  { label: 'Maths', value: 'maths' },
-  { label: 'English', value: 'english' },
-  { label: 'IT', value: 'it' },
-  { label: 'PE', value: 'pe' },
-  { label: 'Chemistry', value: 'chemistry' },
-];
+import { RootState } from '../store';
 
 const types: { label: string; value: EventType }[] = [
   { label: 'Homework', value: EventType.Homework },
@@ -26,6 +19,10 @@ const types: { label: string; value: EventType }[] = [
 export const AddEventScreen = () => {
   const dispatch = useDispatch();
   const database = useContext(DatabaseContext);
+
+  const subjects: { value: number; label: string }[] = useSelector(
+    (state: RootState) => state.subjectsSlice,
+  ).map(subject => ({ value: subject.id, label: subject.name }));
 
   const navigation = useNavigation();
   React.useLayoutEffect(() => {
@@ -51,13 +48,16 @@ export const AddEventScreen = () => {
 
       tx.executeSql(
         'INSERT INTO events (date, type, title, subjectId) VALUES (?, ?, ?, ?)',
-        [date, type, description, 1],
+        [date, type, description, subject],
       );
 
       tx.executeSql(
-        'SELECT events.id, events.date, events.title, events.type, subjects.subject FROM events INNER JOIN subjects ON subjects.id = events.subjectId ORDER BY events.id DESC LIMIT 1',
+        'SELECT events.id, events.date, events.title, events.type, subjects.name as subject FROM events INNER JOIN subjects ON subjects.id = events.subjectId ORDER BY events.id DESC LIMIT 1',
         [],
-        (_, result) => dispatch(add(result.rows.item(0))),
+        (_, result) => {
+          console.log(result.rows.item(0));
+          dispatch(add(result.rows.item(0)));
+        },
       );
 
       // @ts-ignore

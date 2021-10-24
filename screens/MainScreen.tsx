@@ -6,10 +6,10 @@ import {
 } from '@react-navigation/bottom-tabs';
 import { RouteIcon } from '../components/RouteIcon';
 import Placeholder from './Placeholder';
-import { Appbar } from 'react-native-paper';
 import { Route } from '@react-navigation/native';
 import { DashboardScreen } from './DashboardScreen';
 import { Routes } from '../constants/Routes';
+import { Settings } from '../components/Settings';
 
 const Tab = createBottomTabNavigator();
 
@@ -19,9 +19,7 @@ const options: BottomTabNavigationOptions = {
   headerStyle: { elevation: 0 },
   tabBarActiveTintColor: 'rgba(0,0,0,1)',
   tabBarInactiveTintColor: 'rgba(0,0,0,.4)',
-  headerRight: () => (
-    <Appbar.Action icon="dots-vertical" color="black" onPress={() => {}} />
-  ),
+  headerRight: () => <Settings />,
   tabBarStyle: {
     height: 76,
     paddingTop: 16,
@@ -53,7 +51,6 @@ export const MainScreen = () => {
       <Tab.Screen name={Routes.Dashboard} component={DashboardScreen} />
       <Tab.Screen name={Routes.Homework} component={Placeholder} />
       <Tab.Screen name={Routes.Exams} component={Placeholder} />
-      <Tab.Screen name={Routes.Schedule} component={Placeholder} />
     </Tab.Navigator>
   );
 };
